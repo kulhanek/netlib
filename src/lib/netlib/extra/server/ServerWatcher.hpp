@@ -24,7 +24,7 @@
 //    Boston, MA  02110-1301  USA
 // =============================================================================
 
-#include <NetLibMainHeader.hpp>
+#include <NETLibMainHeader.hpp>
 #include <SmartThread.hpp>
 #include <PrmFile.hpp>
 #include <SmallTime.hpp>
