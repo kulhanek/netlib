@@ -46,7 +46,7 @@
   maxthreads      (int)     - number of thread workers in server thread pool
 
 */
-class CExtraServer : public CServer {
+class NETLIB_PACKAGE CExtraServer : public CServer {
 public:
 // constructor -----------------------------------------------------------------
     CExtraServer(void);

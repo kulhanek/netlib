@@ -414,7 +414,8 @@ bool CServerCommand::WaitForEndOfStream(void)
             continue;
         }
         char buffer[100];
-        int recv_len = recv(Socket,buffer,100,MSG_DONTWAIT);
+        // FIXME? - we had MSG_DONTWAIT here but it is actually needed if select is used?
+        int recv_len = recv(Socket,buffer,100,0);
         if( recv_len == SOCKET_ERROR ) {
             if( errno == EAGAIN ) continue;
             ES_ERROR("recv failed");

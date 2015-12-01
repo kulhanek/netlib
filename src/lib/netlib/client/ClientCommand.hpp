@@ -55,8 +55,8 @@ public:
 
 // section of private data ----------------------------------------------------
 private:
-    CClient*        Client;
-    unsigned char*  DataArray;
+    CClient*    		Client;
+    unsigned char*  	DataArray;
 
     virtual void ExecuteThread(void);
 

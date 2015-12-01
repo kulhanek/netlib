@@ -173,7 +173,7 @@ bool CCommandCore::ReadData(unsigned char* p_data,unsigned int length)
         if( FD_ISSET(Socket,&ready_to_read) == 0 ) {
             continue;
         }
-        int send_len = recv(Socket,&p_data[read_len],length-read_len,MSG_DONTWAIT);
+        int send_len = recv(Socket,(char*)&p_data[read_len],length-read_len,MSG_DONTWAIT);
         if( send_len == SOCKET_ERROR ) {
             if( errno == EAGAIN ) continue;
             ES_ERROR("recv failed");
@@ -222,7 +222,7 @@ bool CCommandCore::WriteData(unsigned char* p_data,unsigned int length)
         if( FD_ISSET(Socket,&ready_to_write) == 0 ) {
             continue;
         }
-        int send_len = send(Socket,&p_data[wrote_len],length-wrote_len,MSG_DONTWAIT);
+        int send_len = send(Socket,(const char*)&p_data[wrote_len],length-wrote_len,MSG_DONTWAIT);
         if( send_len == SOCKET_ERROR ) {
             if( errno == EAGAIN ) continue;
             ES_ERROR("send failed");

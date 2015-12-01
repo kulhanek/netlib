@@ -24,6 +24,7 @@
 //    Boston, MA  02110-1301  USA
 // =============================================================================
 
+#include <NetLibMainHeader.hpp>
 #include <SmartThread.hpp>
 #include <PrmFile.hpp>
 #include <SmallTime.hpp>
@@ -44,7 +45,7 @@ class CRegClientList;
   logname           (string) - file name of logfile
 
 */
-class CServerWatcher : public CSmartThread {
+class  NETLIB_PACKAGE CServerWatcher : public CSmartThread {
 public:
 // constructor -----------------------------------------------------------------
     CServerWatcher(CRegClientList* p_list);

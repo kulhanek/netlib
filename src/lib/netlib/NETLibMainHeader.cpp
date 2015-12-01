@@ -36,7 +36,7 @@ const char* LibBuildVersion_NETLib = NETLIB_VERSION;
 
 #ifdef WIN32
 
-#include <vcl.h>
+#include <windows.h>
 
 // under windows we should define entry point for library
 

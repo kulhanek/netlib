@@ -30,9 +30,9 @@
 #include <stdlib.h>
 #include <vector>
 #include <ServerCommand.hpp>
-#include <sys/utsname.h>
 #include <fstream>
 #include <sys/stat.h>
+#include <stdlib.h>
 
 //==============================================================================
 //------------------------------------------------------------------------------
@@ -87,11 +87,11 @@ bool CServer::InitServer(bool gen_password)
     if( gen_password ) {
         // set random generator
         time_t now = time(NULL);
-        srandom(now);
+        srand(now);
         Password.SetLength(MAGIC_LENGTH);
         int pos = 0;
         do {
-            char c = random()%(126-33) + 33;
+            char c = rand()%(126-33) + 33;
             if( (c == '*') || (c == '#') || (c == '!') || (c == '"') || (c == '\'') ) continue;
             Password[pos++] = c;
         } while(pos < MAGIC_LENGTH);
@@ -155,9 +155,9 @@ bool CServer::InitServer(int port)
         std::vector<int>     used_ports;
         // set random generator
         time_t now = time(NULL);
-        srandom(now);
+        srand(now);
         do {
-            ServerPort = random()%(65535-1025) + 1025;
+            ServerPort = rand()%(65535-1025) + 1025;
             //! TODO - check if the port was not already generated
             used_ports.push_back(ServerPort);
 

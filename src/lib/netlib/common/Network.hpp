@@ -33,6 +33,15 @@
 //------------------------------------------------------------------------------
 
 #if defined _WIN32 || defined __CYGWIN__
+
+#include <Winsock2.h>
+#include <ws2tcpip.h>
+
+//! socket ID type
+typedef int     CSocket;
+
+#undef SetPort
+
 #else
 #include <unistd.h>
 #include <sys/types.h>

@@ -63,10 +63,19 @@ INCLUDE_DIRECTORIES(${PRMFILE_ROOT}/src/lib/cprmfile SYSTEM)
 LINK_DIRECTORIES(${PRMFILE_ROOT}/lib)
 SET(PRMFILE_CLIB_NAME cprmfile)
 
-SET(SYSTEM_LIBS
-            ${PRMFILE_CLIB_NAME}
-            ${HIPOLY_LIB_NAME}
-            )
+
+IF(DEFINED WIN32)
+	SET(SYSTEM_LIBS
+	            ${PRMFILE_CLIB_NAME}
+	            ${HIPOLY_LIB_NAME}
+	            ws2_32
+	            )
+ELSE()
+	SET(SYSTEM_LIBS
+	            ${PRMFILE_CLIB_NAME}
+	            ${HIPOLY_LIB_NAME}
+	            )
+ENDIF()	            
 
 # ==============================================================================
 # output directories -----------------------------------------------------------
