@@ -30,19 +30,19 @@
 //------------------------------------------------------------------------------
 
 //! return status of server
-DECLARE_OPERATION(Operation_GetServerInfo);
+DECLARE_OPERATION(NETLIB_PACKAGE,Operation_GetServerInfo);
 
 //! shutdown server
-DECLARE_OPERATION(Operation_ShutdownServer);
+DECLARE_OPERATION(NETLIB_PACKAGE,Operation_ShutdownServer);
 
 //! get all server errors
-DECLARE_OPERATION(Operation_GetServerErrors);
+DECLARE_OPERATION(NETLIB_PACKAGE,Operation_GetServerErrors);
 
 //! register client
-DECLARE_OPERATION(Operation_RegisterClient);
+DECLARE_OPERATION(NETLIB_PACKAGE,Operation_RegisterClient);
 
 //! unregister client
-DECLARE_OPERATION(Operation_UnregisterClient);
+DECLARE_OPERATION(NETLIB_PACKAGE,Operation_UnregisterClient);
 
 //------------------------------------------------------------------------------
 

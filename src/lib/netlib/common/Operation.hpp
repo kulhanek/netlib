@@ -50,7 +50,7 @@ private:
 //------------------------------------------------------------------------------
 
 //! declare operation
-#define DECLARE_OPERATION(name) extern NETLIB_PACKAGE COperation name
+#define DECLARE_OPERATION(scope,name) extern scope COperation name
 
 //! define operation
 #define DEFINE_OPERATION(name,sextuuid) COperation name(sextuuid)
@@ -58,7 +58,7 @@ private:
 //------------------------------------------------------------------------------
 
 //! illegal operation
-DECLARE_OPERATION(Operation_IllegalOperation);
+DECLARE_OPERATION(NETLIB_PACKAGE,Operation_IllegalOperation);
 
 //------------------------------------------------------------------------------
 
