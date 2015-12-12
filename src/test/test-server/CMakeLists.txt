@@ -14,6 +14,7 @@ SET(TEST_SERVER_SRC
 
 # final build ------------------------------------------------------------------
 ADD_EXECUTABLE(test-server ${TEST_SERVER_SRC})
+ADD_DEPENDENCIES(test-server netlib_shared)
 
 TARGET_LINK_LIBRARIES(test-server
         netlib

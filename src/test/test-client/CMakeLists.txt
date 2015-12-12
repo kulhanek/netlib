@@ -12,6 +12,7 @@ SET(TEST_CLIENT_SRC
 
 # final build ------------------------------------------------------------------
 ADD_EXECUTABLE(test-client ${TEST_CLIENT_SRC})
+ADD_DEPENDENCIES(test-client netlib_shared)
 
 TARGET_LINK_LIBRARIES(test-client
         netlib
