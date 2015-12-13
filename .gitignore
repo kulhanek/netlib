@@ -6,5 +6,5 @@ DartConfiguration.tcl
 Makefile
 /bin/
 /lib/
-include/
+/include
 /test
