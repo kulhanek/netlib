@@ -112,7 +112,7 @@ bool CServer::InitServer(int port)
     if( port != 0 ) {
         // check if port is in correct range
         if( (port <= 1024) && (port > 65535) ) {
-            ES_ERROR("server port is not in correct range <1024,65535>");
+            ES_ERROR("server port is not in correct range <1025,65535>");
             return(false);
         }
     }
