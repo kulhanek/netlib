@@ -104,6 +104,8 @@ private:
     CSocket                     ListenSocket;           // listenning socket
     CThreadPool                 ThreadPool;             // thread pool
     bool                        Terminated;
+    int                         MinPortNumber;          // minimum port number - for auto port selection
+    int                         MaxPortNumber;          // maximum port number    
 
     CSimpleMutex                AccessMutex;
 

@@ -28,7 +28,7 @@
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
-#include <vector>
+#include <set>
 #include <ServerCommand.hpp>
 #include <fstream>
 #include <sys/stat.h>
@@ -62,6 +62,9 @@ CServer::CServer(void)
 
     MaxListenQueueLen = 30;
     ThreadPool.SetMaxThreadCount(5);
+    
+    MinPortNumber = 50000;
+    MaxPortNumber = 60000;     
 
     // variable initialization
     ListenSocket = INVALID_SOCKET;
@@ -152,14 +155,24 @@ bool CServer::InitServer(int port)
             return(false);
         }
     } else {
-        std::vector<int>     used_ports;
+        std::set<int>     used_ports;
+        int               num_of_failures = 0;
+        result = SOCKET_ERROR;
+        
         // set random generator
         time_t now = time(NULL);
         srand(now);
+        
         do {
-            ServerPort = rand()%(65535-1025) + 1025;
-            //! TODO - check if the port was not already generated
-            used_ports.push_back(ServerPort);
+            // generate random port
+            ServerPort = rand()%(MaxPortNumber-MinPortNumber) + MinPortNumber;
+            if( used_ports.count(ServerPort) > 0 ){
+                // was already generated
+                num_of_failures++;
+                if( num_of_failures > MAX_TRIALS ) break; // too many failures
+                continue; 
+            }
+            used_ports.insert(ServerPort);
 
             memset(&server_addr,0,sizeof(server_addr));
             server_addr.sin_port = htons(ServerPort);
@@ -167,7 +180,7 @@ bool CServer::InitServer(int port)
             server_addr.sin_addr.s_addr = INADDR_ANY;
 
             result = bind(ListenSocket,(sockaddr*)&server_addr,sizeof(server_addr));
-        } while( (result == SOCKET_ERROR) && (used_ports.size() < MAX_TRIALS )  );
+        } while( (result == SOCKET_ERROR) && (used_ports.size() < MAX_TRIALS)  );
 
         if( result == SOCKET_ERROR ) {
             CSmallString error;
