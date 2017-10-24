@@ -37,37 +37,39 @@ using namespace std;
 
 #define PASS_LENGTH 5
 
-bool CExtraClient::ShutdownServer(std::ostream& vout)
+bool CExtraClient::ShutdownServer(std::ostream& vout,bool nopass)
 {
-    CSmallString passphrase;
+    if( ! nopass ){
+        CSmallString passphrase;
 
-    // set random generator
-    time_t now = time(NULL);
-    srand(now);
-    passphrase.SetLength(PASS_LENGTH);
-    int pos = 0;
-    int attempts = 0;
-    do {
-        attempts++;
-        if( attempts % 1000 == 0 ){
-            time_t now = time(NULL);
-            srand(now);
+        // set random generator
+        time_t now = time(NULL);
+        srand(now);
+        passphrase.SetLength(PASS_LENGTH);
+        int pos = 0;
+        int attempts = 0;
+        do {
+            attempts++;
+            if( attempts % 1000 == 0 ){
+                time_t now = time(NULL);
+                srand(now);
+            }
+            char c = rand()%(126-33) + 33;
+            if( (c == '*') || (c == '#') || (c == '!') || (c == '"') || (c == '\'') ) continue;
+            passphrase[pos++] = c;
+        } while(pos < PASS_LENGTH);
+
+        vout << endl;
+        vout << "Generated security passphrase : " << passphrase << endl;
+        vout << "Rewrite passphrase to shutdown: ";
+        string user;
+        cin >> user;
+        if( user != string(passphrase) ){
+            vout << "Passphrases do not match - exiting ..." << endl;
+            return(false);
+        } else {
+            vout << "Passphrases match - shutting down the server ..." << endl;
         }
-        char c = rand()%(126-33) + 33;
-        if( (c == '*') || (c == '#') || (c == '!') || (c == '"') || (c == '\'') ) continue;
-        passphrase[pos++] = c;
-    } while(pos < PASS_LENGTH);
-
-    vout << endl;
-    vout << "Generated security passphrase : " << passphrase << endl;
-    vout << "Rewrite passphrase to shutdown: ";
-    string user;
-    cin >> user;
-    if( user != string(passphrase) ){
-        vout << "Passphrases do not match - exiting ..." << endl;
-        return(false);
-    } else {
-        vout << "Passphrases match - shutting down the server ..." << endl;
     }
 
     CClientCommand cmd;

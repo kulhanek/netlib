@@ -66,7 +66,7 @@ public:
     void GetLongServerInfo(CClientCommand* p_command,std::ostream& sout);
 
     //! shutdown server
-    bool ShutdownServer(std::ostream& vout);
+    bool ShutdownServer(std::ostream& vout,bool nopass=false);
 
     //! return server error stack
     bool GetServerErrors(std::ostream& vout);
