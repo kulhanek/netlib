@@ -71,6 +71,9 @@ public:
     //! return protocol name
     const CSmallString& GetProtocolName(void) const;
 
+    //! is serverkey
+    bool IsServerKey(void) const;
+
 // set methods ----------------------------------------------------------------
     //! set protocol name
     void SetProtocolName(const CSmallString& protocol);
@@ -105,6 +108,7 @@ private:
     CSmallString                    Action;        //!< action string
     CSmallString                    Password;      //!< password
     std::vector<CActionParameter>   Parameters;    //!< list of action parameters
+    bool                            ServerKey;
 
     void GetServerNameAndIP(const CSmallString& addr);
 };

@@ -45,6 +45,7 @@ CActionRequest::CActionRequest(void)
     IP = "127.0.0.1";
     Port = INVALID_PORT;
     Protocol = "netlib";
+    ServerKey = false;
 }
 
 //==============================================================================
@@ -113,6 +114,13 @@ const CSmallString& CActionRequest::GetProtocolName(void) const
     return(Protocol);
 }
 
+//------------------------------------------------------------------------------
+
+bool CActionRequest::IsServerKey(void) const
+{
+    return(ServerKey);
+}
+
 //==============================================================================
 //------------------------------------------------------------------------------
 //==============================================================================
@@ -126,6 +134,8 @@ void CActionRequest::SetProtocolName(const CSmallString& protocol)
 
 void CActionRequest::SetQualifiedName(const CSmallString& name)
 {
+    ServerKey = false;
+
     // string is empty
     if( name == NULL ) {
         INVALID_ARGUMENT("qualified name is NULL");
@@ -170,7 +180,9 @@ void CActionRequest::SetQualifiedName(const CSmallString& name)
 
     CSmallString addr = name.GetSubStringFromTo(lname_beg,lname_end);
 
-    if( addr != "serverkey" ) {
+    if( (addr == "serverkey") || (addr == "key") ) {
+        ServerKey = true;
+    } else {
         GetServerNameAndIP(addr);
     }
 
