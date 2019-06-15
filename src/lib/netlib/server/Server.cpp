@@ -363,7 +363,11 @@ const CSmallString CServer::GetServerHostName(void)
     }
 
     freeaddrinfo(info);
-    return(hname);
+    if( hname != NULL ) {
+        return(hname);
+    } else {
+        return("localhost");
+    }
 }
 
 //==============================================================================
