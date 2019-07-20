@@ -206,7 +206,7 @@ bool CServerCommand::ReadHeader(void)
     if( ReadData((unsigned char*)&Header,sizeof(Header)) == false ) {
         CSmallString error;
         error << "unable to read header from client '" << ClientIP << " (" << ClientName << ")'";
-        ES_ERROR(errpr);
+        ES_ERROR(error);
         return(false);
     }
 
