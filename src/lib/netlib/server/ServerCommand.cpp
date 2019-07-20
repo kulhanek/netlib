@@ -204,12 +204,16 @@ bool CServerCommand::ReadHeader(void)
 
     // read header;
     if( ReadData((unsigned char*)&Header,sizeof(Header)) == false ) {
-        ES_ERROR("unable to read header");
+        CSmallString error;
+        error << "unable to read header from client '" << ClientIP << " (" << ClientName << ")'";
+        ES_ERROR(errpr);
         return(false);
     }
 
     if( Header.CheckHeader() == false ) {
-        ES_ERROR("mismatch in header");
+        CSmallString error;
+        error << "mismatch in header from client '" << ClientIP << " (" << ClientName << ")'";
+        ES_ERROR(error);
         return(false);
     }
 
