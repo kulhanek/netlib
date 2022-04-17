@@ -339,35 +339,42 @@ void CActionRequest::ReadServerKey(const CSmallString& name)
 
 void CActionRequest::GetServerNameAndIP(const CSmallString& addr)
 {
-    addrinfo       *p_addrinfo;
+    addrinfo       *p_addrinfo_start;
     int            nerr;
     // get hostname and IP
-    if( (nerr = getaddrinfo(addr,NULL,NULL,&p_addrinfo)) != 0 ) {
+    if( (nerr = getaddrinfo(addr,NULL,NULL,&p_addrinfo_start)) != 0 ) {
         CSmallString error;
         error << "unable to decode server name (" <<  gai_strerror(nerr) << ")";
         RUNTIME_ERROR(error);
     }
 
-    // get server name
-    char s_name[MAX_NET_NAME];
-    memset(s_name,0,MAX_NET_NAME);
+    addrinfo       *p_addrinfo;
 
-    if( (nerr = getnameinfo(p_addrinfo->ai_addr,p_addrinfo->ai_addrlen,s_name,MAX_NET_NAME-1,NULL,0,0)) != 0 ) {
-        CSmallString error;
-        error << "unable to get server name (" <<  gai_strerror(nerr) << ")";
-        freeaddrinfo(p_addrinfo);
-        RUNTIME_ERROR(error);
-    }
-    Name = s_name;
+    for(p_addrinfo = p_addrinfo_start; p_addrinfo != NULL; p_addrinfo = p_addrinfo->ai_next) {
 
-    // get server IP
-    if( (nerr = getnameinfo(p_addrinfo->ai_addr,p_addrinfo->ai_addrlen,s_name,MAX_NET_NAME-1,NULL,0,NI_NUMERICHOST)) != 0 ) {
-        CSmallString error;
-        error << "unable to get server IP (" <<  gai_strerror(nerr) << ")";
-        freeaddrinfo(p_addrinfo);
-        RUNTIME_ERROR(error);
+        if( p_addrinfo->ai_family != AF_INET ) continue; // we support only IP4 now :-(
+
+        // get server name
+        char s_name[MAX_NET_NAME];
+        memset(s_name,0,MAX_NET_NAME);
+
+        if( (nerr = getnameinfo(p_addrinfo->ai_addr,p_addrinfo->ai_addrlen,s_name,MAX_NET_NAME-1,NULL,0,0)) != 0 ) {
+            CSmallString error;
+            error << "unable to get server name (" <<  gai_strerror(nerr) << ")";
+            freeaddrinfo(p_addrinfo);
+            RUNTIME_ERROR(error);
+        }
+        Name = s_name;
+
+        // get server IP
+        if( (nerr = getnameinfo(p_addrinfo->ai_addr,p_addrinfo->ai_addrlen,s_name,MAX_NET_NAME-1,NULL,0,NI_NUMERICHOST)) != 0 ) {
+            CSmallString error;
+            error << "unable to get server IP (" <<  gai_strerror(nerr) << ")";
+            freeaddrinfo(p_addrinfo);
+            RUNTIME_ERROR(error);
+        }
+        IP = s_name;
     }
-    IP = s_name;
 
     freeaddrinfo(p_addrinfo);
 }
