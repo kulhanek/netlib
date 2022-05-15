@@ -43,6 +43,7 @@ CExtraServer::CExtraServer(void)
 {
     Port = INVALID_PORT;
     DoNotShutdown = false;
+    TargetRegs = -1;
     ServerKeyIsReady = false;
 
     // register operations
@@ -103,6 +104,12 @@ bool CExtraServer::ProcessServerControl(CPrmFile& confile,ostream& vout)
         vout << "Do not automatically shutdown (donotshutdown)  = " << setw(6) << bool_to_str(DoNotShutdown) << endl;
     } else {
         vout << "Do not automatically shutdown (donotshutdown)  = " << setw(6) << bool_to_str(DoNotShutdown) << "                (default)" << endl;
+    }
+
+    if( confile.GetIntegerByKey("targetregs",TargetRegs) == true ) {
+        vout << "Target num of finished registr. (targetregs)   = " << setw(6) << TargetRegs << endl;
+    } else {
+        vout << "Target num of finished registr. (targetregs)   = " << setw(6) << TargetRegs << "                (default)" << endl;
     }
 
     int queue_len = GetMaxListenQueueLen();

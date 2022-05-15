@@ -67,6 +67,7 @@ public:
 public:
     CRegClientList          RegClients;         // registered clients
     bool                    DoNotShutdown;
+    int                     TargetRegs;         // how many finished registrations is required to terminate the server
 
 // section of private data -----------------------------------------------------
 private:

@@ -49,6 +49,13 @@ void CExtraProcessor::UnregisterClient(void)
     if( p_server->RegClients.GetNumberOfActiveRegistration() == 0 ) {
         if( p_server->DoNotShutdown == false ) p_server->TerminateServer();
     }
+
+    if( p_server->TargetRegs > 0 ){
+        if( (p_server->RegClients.GetNumberOfClients() >= p_server->TargetRegs) &&
+            (p_server->RegClients.GetNumberOfActiveRegistration() == 0) ){
+            p_server->TerminateServer();
+        }
+    }
 }
 
 //==============================================================================
